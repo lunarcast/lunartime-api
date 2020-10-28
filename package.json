@@ -1,4 +1,9 @@
 {
     "version": "1.0.0",
-    "scripts": {}
+    "scripts": {
+        "build": "tsc"
+    },
+    "devDependencies": {
+        "typescript": "^4.0.5"
+    }
 }
