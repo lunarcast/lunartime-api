@@ -1,0 +1,17 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url = "***"
+}
+
+model Entry {
+    ID    Int      @id @default(autoincrement()) @map("id")
+    Name  String   @unique @map("name")
+    Score Int      @map("score")
+    Date  DateTime @map("date")
+
+    @@map("entries")
+}
