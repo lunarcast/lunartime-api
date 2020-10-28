@@ -10,7 +10,8 @@
         "db:generate": "prisma generate",
         "dev": "tsnd --respawn --notify=false -T -r dotenv/config src",
         "generate": "yarn db:generate",
-        "migrate": "yarn db:migrate"
+        "migrate": "yarn db:migrate",
+        "start": "node -r dotenv/config dist"
     },
     "devDependencies": {
         "@types/node": "^14.14.5",
