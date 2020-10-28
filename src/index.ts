@@ -1,9 +1,9 @@
 import { createServer } from "http"
-import { PrismaClient } from "@prisma/client"
+// import { PrismaClient } from "@prisma/client"
 
 const port = Number(process.env.PORT || 8091)
 
-const db = new PrismaClient()
+// const db = new PrismaClient()
 
 const server = createServer((_, res) => {
     res.statusCode = 200
