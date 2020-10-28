@@ -5,7 +5,12 @@
     },
     "scripts": {
         "build": "tsc",
-        "dev": "tsnd --respawn --notify=false -T -r dotenv/config src"
+        "db:migrate": "prisma migrate up --experimental",
+        "db:migrate-save": "prisma migrate save --experimental",
+        "db:generate": "prisma generate",
+        "dev": "tsnd --respawn --notify=false -T -r dotenv/config src",
+        "generate": "yarn db:generate",
+        "migrate": "yarn db:migrate"
     },
     "devDependencies": {
         "@types/node": "^14.14.5",
