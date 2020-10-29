@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+    database:
+        image: postgres
+        ports:
+            - 5432:5432
+        env_file:
+            - database.env
+        volumes:
+            - postgres:/var/lib/postgresql/data/
+    api:
+        build: .
+        depends_on:
+            - database
+        ports:
+            - "8091:8091"
+        env_file: .env
+        environment:
+            WAIT_HOSTS: postgres:5432
+volumes:
+    postgres:
