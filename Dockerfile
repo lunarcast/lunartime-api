@@ -35,4 +35,4 @@ RUN chmod +x /wait
 RUN chmod +x start.sh
 
 USER node
-CMD ./start.sh
+CMD /wait && ./start.sh
