@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "license": "Unlicense",
     "engines": {
         "node": ">=14.8.0"
     },
