@@ -1,3 +1,5 @@
+import type WebSocket from "ws"
+
 export type NotificationType = {
     leaderboardUpdate: {
         lastClicked: number
@@ -47,3 +49,10 @@ export type ResponseMessage<T extends keyof RequestType> = {
     request: false
     id: number
 } & Response<T>
+
+type Awaitable<T> = T | Promise<T>
+
+export type Handler<T extends keyof RequestType> = (
+    request: Request<T>,
+    client: WebSocket
+) => Awaitable<Response<T>>
