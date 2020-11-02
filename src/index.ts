@@ -1,16 +1,16 @@
-import { createServer } from "http"
-// import { PrismaClient } from "@prisma/client"
+import WebSocket from "ws"
+import { PrismaClient } from "@prisma/client"
 
 const port = Number(process.env.PORT || 8091)
 
-// const db = new PrismaClient()
+export const db = new PrismaClient()
 
-const server = createServer((_, res) => {
-    res.statusCode = 200
-    res.setHeader("Content-Type", "text/plain")
-    res.end("Hello from lunartime's API!")
+const wss = new WebSocket.Server({ port }, () => {
+    console.log(
+        `WebSockets server started and running at ws://localhost:${port}/`
+    )
 })
 
-server.listen(port)
-
-console.info(`Server running at http://localhost:${port}/`)
+wss.on("connection", async ws => {
+    ws.send("Hello from lunartime's API!")
+})
