@@ -16,7 +16,7 @@ export const db = new PrismaClient()
 export const started = Date.now()
 
 const wss = new WebSocket.Server({ port }, () => {
-    console.log(
+    console.info(
         `WebSockets server started and running at ws://localhost:${port}/`
     )
 })

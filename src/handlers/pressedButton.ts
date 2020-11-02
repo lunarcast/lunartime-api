@@ -21,8 +21,6 @@ export const pressedButton: Handler<"pressedButton"> = async (
         date: new Date(started)
     }
 
-    console.log(date.getTime())
-
     const score = Math.floor(
         (Date.now() - lastClicked.getTime()) / 1000
     )
