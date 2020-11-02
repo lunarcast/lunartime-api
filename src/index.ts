@@ -1,6 +1,8 @@
 import WebSocket from "ws"
 import { PrismaClient } from "@prisma/client"
 
+import { fetchLeaderboard, notify } from "./utils"
+
 const port = Number(process.env.PORT || 8091)
 
 export const db = new PrismaClient()
@@ -13,5 +15,13 @@ const wss = new WebSocket.Server({ port }, () => {
 })
 
 wss.on("connection", async ws => {
-    ws.send("Hello from lunartime's API!")
+    const {
+        lastClicked,
+        leaderboard
+    } = await fetchLeaderboard()
+    notify(
+        "leaderboardUpdate",
+        { lastClicked, leaderboard },
+        ws
+    )
 })
