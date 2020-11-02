@@ -3,7 +3,13 @@ import type WebSocket from "ws"
 import { db, started } from "."
 import type {
     Notification,
-    NotificationType
+    NotificationType,
+    Request,
+    RequestTypes,
+    RequestType,
+    ResponseError,
+    ResponseSuccess,
+    ResponseMessage
 } from "./types"
 
 export const notify = <T extends keyof NotificationType>(
@@ -40,4 +46,49 @@ export const fetchLeaderboard = async () => {
     ]) as [string, number][]
 
     return { lastClicked: date.getTime(), leaderboard }
+}
+
+export const parseRequest = (request: string) => {
+    const parsedRequest = JSON.parse(
+        request
+    ) as RequestTypes
+
+    return parsedRequest
+}
+
+export const ok = <T extends keyof RequestType>(
+    request: Request<T>,
+    response: ResponseSuccess<T>,
+    client: WebSocket
+) => {
+    const { id } = request
+    const { ok, data } = response
+
+    const message: ResponseMessage<T> = {
+        data,
+        id,
+        ok,
+        request: false
+    }
+
+    client.send(JSON.stringify(message))
+}
+
+export const error = <T extends keyof RequestType>(
+    request: Request<T>,
+    response: ResponseError,
+    client: WebSocket
+) => {
+    const { id } = request
+    const { ok, errorCode, errorReason } = response
+
+    const message: ResponseMessage<T> = {
+        errorCode,
+        errorReason,
+        id,
+        ok,
+        request: false
+    }
+
+    client.send(JSON.stringify(message))
 }
