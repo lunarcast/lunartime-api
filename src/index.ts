@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client"
 const port = Number(process.env.PORT || 8091)
 
 export const db = new PrismaClient()
+export const started = Date.now()
 
 const wss = new WebSocket.Server({ port }, () => {
     console.log(
