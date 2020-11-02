@@ -21,6 +21,9 @@ const wss = new WebSocket.Server({ port }, () => {
     )
 })
 
+const isAlive = new Map<WebSocket, boolean>()
+const noop = () => {}
+
 wss.on("connection", async ws => {
     const {
         lastClicked,
@@ -59,4 +62,21 @@ wss.on("connection", async ws => {
             ok(request, response, ws)
         }
     })
+
+    ws.on("pong", () => {
+        isAlive.set(ws, true)
+    })
+})
+
+const interval = setInterval(() => {
+    wss.clients.forEach(ws => {
+        if (!isAlive.get(ws)) return ws.terminate()
+
+        isAlive.set(ws, false)
+        ws.ping(noop)
+    })
+}, 1 * 1000)
+
+wss.on("close", () => {
+    clearInterval(interval)
 })
