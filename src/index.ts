@@ -70,7 +70,7 @@ wss.on("connection", async ws => {
 
 const interval = setInterval(() => {
     wss.clients.forEach(ws => {
-        if (!isAlive.get(ws)) return ws.terminate()
+        if (isAlive.get(ws) === false) return ws.terminate()
 
         isAlive.set(ws, false)
         ws.ping(noop)
